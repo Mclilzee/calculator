@@ -51,7 +51,10 @@ function drawNumber(e) {
   if (field.textContent.length < 17) {
     field.textContent += e.textContent;
   }
-  if (field.textContent.startsWith("0")) {
+  if (
+    field.textContent.startsWith("0") &&
+    !field.textContent.startsWith("0.")
+  ) {
     field.textContent = field.textContent.slice(1);
   }
 }
