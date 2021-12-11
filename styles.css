@@ -43,3 +43,17 @@ button {
   flex: auto;
   flex-direction: column;
 }
+
+.number {
+  font-weight: bold;
+}
+
+.operator,
+.percent{
+  font-weight: bold;
+  background-color: skyblue
+}
+
+.calculate {
+  background-color: gold;
+}
