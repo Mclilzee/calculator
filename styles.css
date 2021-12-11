@@ -25,13 +25,20 @@ body {
   width: 300px;
   flex-direction: column;
   border: 10px solid steelblue;
+  flex: auto;
 }
 
 .rows {
   display: flex;
-  flex:auto;
+  flex: auto;
 }
 
 button {
   flex: auto;
+}
+
+.column {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
 }
