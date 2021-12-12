@@ -6,20 +6,28 @@ let secondNumber = 0;
 let hasComma = false;
 
 function clear() {
-  field.textContent = "";
+  field.textContent = "0";
   firstNumber = 0;
+  secondNumber = 0;
   hasComma = false;
 }
 
 const c = document.querySelector("#C");
 c.addEventListener("click", () => clear());
 
+window.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+  }
+  drawNumberKeyboard(e.key);
+});
+
 document.querySelectorAll(".number").forEach((e) => {
-  e.addEventListener("click", () => drawNumber(e));
+  e.addEventListener("click", () => drawNumber(e.textContent));
 });
 
 document.querySelectorAll(".operator").forEach((e) => {
-  e.addEventListener("click", () => drawOperator(e));
+  e.addEventListener("click", () => drawOperator(e.textContent));
 });
 
 document.querySelector("#equals").addEventListener("click", () => equals());
@@ -47,9 +55,26 @@ document.querySelector(".percent").addEventListener("click", () => {
   equals();
 });
 
-function drawNumber(e) {
+function drawNumberKeyboard(char) {
+  if (char.match(/[+\-*\/]/g)) {
+    drawOperator(char);
+  } else if (char.match(/\d/g)) {
+    drawNumber(char);
+  } else {
+    if (char === "*") {
+      drawOperator("x");
+    } else if (char === "." && !hasComma) {
+      hasComma = true;
+      field.textContent += ".";
+    } else if (char === "Enter") {
+      equals();
+    }
+  }
+}
+
+function drawNumber(digit) {
   if (field.textContent.length < 17) {
-    field.textContent += e.textContent;
+    field.textContent += digit;
   }
   if (
     field.textContent.startsWith("0") &&
@@ -59,7 +84,7 @@ function drawNumber(e) {
   }
 }
 
-function drawOperator(e) {
+function drawOperator(operator) {
   if (field.textContent.includes(" ")) {
     equals();
   }
@@ -67,7 +92,7 @@ function drawOperator(e) {
   if (field.textContent.endsWith(".")) {
     field.textContent += "0";
   }
-  field.textContent += " " + e.textContent + " ";
+  field.textContent += " " + operator + " ";
   hasComma = false;
 }
 
@@ -98,9 +123,7 @@ function equals() {
     hasComma = false;
   } else {
     let numberString = "" + firstNumber;
-    while (numberString.length > 17) {
-      numberString = numberString.slice(0, numberString.length - 1);
-    }
+    numberString = numberString.slice(0, 18);
     hasComma = true;
     firstNumber = Number(numberString);
   }
