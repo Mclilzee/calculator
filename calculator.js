@@ -56,7 +56,7 @@ document.querySelector(".percent").addEventListener("click", () => {
 });
 
 function drawNumberKeyboard(char) {
-  if (char.match(/[+\-*\/]/g)) {
+  if (char.match(/[+\-/]/g)) {
     drawOperator(char);
   } else if (char.match(/\d/g)) {
     drawNumber(char);
